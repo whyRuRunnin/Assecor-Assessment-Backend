@@ -11,7 +11,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,14 +26,13 @@ public class PersonService {
         {
             try {
                 br = new BufferedReader(new FileReader(path));
-                AtomicInteger  count = new AtomicInteger();
                 while ((line = br.readLine()) != null) {
                     String[] values = line.split(",");
                     Person person = new Person();
                     person.setName(values[0]);
                     person.setLastname(values[1]);
                     String[] address = values[2].split(" ");
-                    person.setZipcode(Long.parseLong(address[1]));
+                    person.setZipcode(Integer.valueOf(address[1]));
                     person.setCity(address[2]);
                     switch (values[3].charAt(1)) {
                         case '1':
@@ -74,7 +72,7 @@ public class PersonService {
         personsRepository.findAll().forEach(people::add);
         return people;
     }
-    public List<Person> getPersonById(int id) {
+    public List<Person> getPersonById(Integer id) {
         return getAllPeople().stream().filter(y -> y.getId() == id).collect(Collectors.toList());
     }
 
@@ -84,7 +82,7 @@ public class PersonService {
     public void createPerson(Person person) {
         personsRepository.save(person);
     }
-    public void updatePerson(int id, Person person){
+    public void updatePerson(Integer id, Person person){
         personsRepository.save(person);
     }
     public void deletePerson(Integer id) {

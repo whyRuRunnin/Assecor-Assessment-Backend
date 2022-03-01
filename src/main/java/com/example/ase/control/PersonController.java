@@ -4,6 +4,7 @@ import com.example.ase.person.Person;
 import com.example.ase.modell.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,27 +26,28 @@ public class PersonController implements ErrorController {
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
-    @RequestMapping (value = "/persons", method = GET)
+    @GetMapping (value = "/persons")
     public List<Person> getAllPeople() {
+        personService.readCSV();
         return personService.getAllPeople();
     }
-    @RequestMapping (value = "/persons/{id}", method = RequestMethod.GET)
+    @GetMapping (value = "/persons/{id}")
     public List<Person> getPersonById(@PathVariable Integer id) {
        return personService.getPersonById(id);
     }
-    @RequestMapping(value = "/persons/colors/{color}", method = RequestMethod.GET)
+    @GetMapping(value = "/persons/colors/{color}")
     public @ResponseBody List<Person> getPersonByColor(@PathVariable(value = "color") String color) {
         return personService.getPersonByColor(color);
     }
-    @RequestMapping(method = RequestMethod.POST, value ="/persons")
+    @PostMapping(value ="/persons")
     public void createPerson(@RequestBody Person person) {
         personService.createPerson(person);
     }
-    @RequestMapping(method = RequestMethod.DELETE, value ="/persons/{id}")
+    @DeleteMapping(value ="/persons/{id}")
     public void deletePersonById(@PathVariable ("id") Integer id) {
         personService.deletePerson(id);
     }
-    @RequestMapping(method = RequestMethod.PUT, value = "/persons/{id}")
+    @PutMapping(value = "/persons/{id}")
     public void updatePerson(@RequestBody Person person, @PathVariable Integer id) {
         personService.updatePerson(id, person);
     }

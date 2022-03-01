@@ -8,16 +8,16 @@ public class Person {
     @Id
     @GeneratedValue(strategy =
     GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
     private String name;
     private String lastname;
-    private long zipcode;
+    private Integer zipcode;
     private String city;
     private String color;
 
     public Person() {}
 
-    public Person(long id, String name, String lastname, long zipcode, String city, String color) {
+    public Person(Integer id, String name, String lastname, Integer zipcode, String city, String color) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -26,8 +26,12 @@ public class Person {
         this.color = color;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -50,7 +54,7 @@ public class Person {
         return zipcode;
     }
 
-    public void setZipcode(long zipcode) {
+    public void setZipcode(Integer zipcode) {
         this.zipcode = zipcode;
     }
 
